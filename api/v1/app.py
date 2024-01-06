@@ -3,6 +3,7 @@
 from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
+from os import getenv
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
@@ -22,11 +23,6 @@ def not_found(error):
 
 if __name__ == "__main__":
     """The main function where we call all function"""
-    from os import getenv
-    host = '0.0.0.0'
-    if getenv('HBNB_API_HOST'):
-        host = getenv('HBNB_API_HOST')
-    port = 5000
-    if getenv('HBNB_API_PORT'):
-        port = getenv('HBNB_API_PORT')
-    app.run(host=host, port=port, threaded=True)
+    HBNB_API_HOST = getenv('HBNB_API_HOST')
+    HBNB_API_PORT = getenv('HBNB_API_PORT')
+    app.run(host=HBNB_API_HOST, port=HBNB_API_PORT, threaded=True, debug=True)

@@ -16,11 +16,13 @@ def status():
 def stats():
     """stats route doc"""
     stats_dict = {
-            "amenities": storage.count("Amenity"),
-            "cities": storage.count("City"),
-            "places": storage.count("Place"),
-            "reviews": storage.count("Review"),
-            "states": storage.count("State"),
-            "users": storage.count("User")
+            "amenities": "Amenity",
+            "cities": "City",
+            "places": "Place",
+            "reviews": "Review",
+            "states": "State",
+            "users": "User"
             }
+    for k, v in stats_dict.items():
+        stats_dict[k] = storage.count(v)
     return jsonify(stats_dict)
