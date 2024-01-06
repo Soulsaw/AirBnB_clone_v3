@@ -53,4 +53,4 @@ def place_id(place_id):
             attr = request.json
             storage.save()
             return make_response(jsonify(place.to_dict()), 200)
-    return make_response(jsonify({"error": "Not Found"}), 404)
+    return make_response(jsonify({"error": "Not found"}), 404)

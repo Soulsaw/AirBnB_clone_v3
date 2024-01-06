@@ -48,4 +48,4 @@ def user_id(user_id):
             user.password = attr['password']
             storage.save()
             return make_response(jsonify(user.to_dict()), 200)
-    return make_response(jsonify({"error": "Not Found"}), 404)
+    return make_response(jsonify({"error": "Not found"}), 404)

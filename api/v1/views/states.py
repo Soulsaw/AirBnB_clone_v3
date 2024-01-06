@@ -46,4 +46,4 @@ def state_id(state_id):
             state.name = attr['name']
             storage.save()
             return make_response(jsonify(state.to_dict()), 200)
-    return make_response(jsonify({"error": "Not Found"}), 404)
+    return make_response(jsonify({"error": "Not found"}), 404)

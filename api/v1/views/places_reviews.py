@@ -56,4 +56,4 @@ def review(review_id):
             review.text = attr['text']
             storage.save()
             return make_response(jsonify(review.to_dict()), 200)
-    return make_response(jsonify({"error": "Not Found"}), 404)
+    return make_response(jsonify({"error": "Not found"}), 404)
