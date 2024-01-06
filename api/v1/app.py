@@ -21,7 +21,7 @@ def not_found(error):
 
 
 if __name__ == "__main__":
-    """The main function"""
+    """The main function where we call all function"""
     from os import getenv
     host = getenv('HBNB_API_HOST')
     port = getenv('HBNB_API_PORT')
