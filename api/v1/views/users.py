@@ -15,13 +15,13 @@ def users():
         for v in all_users:
             new_dict.append(v.to_dict())
         return jsonify(new_dict)
-    if request.method == "POST":
+    if request.method == 'POST':
         if not request.json:
-            return make_response(jsonify("Not a JSON"), 400)
+            return make_response(jsonify('Not a JSON'), 400)
         elif 'email' not in request.json:
-            return make_response(jsonify("Missing email"), 400)
+            return make_response(jsonify('Missing email'), 400)
         elif 'password' not in request.json:
-            return make_response(jsonify("Missing password"), 400)
+            return make_response(jsonify('Missing password'), 400)
         attr = request.json
         user = User(**attr)
         user.save()
@@ -34,17 +34,17 @@ def user_id(user_id):
     """return an user with the matching user_id"""
     user = storage.get(User, user_id)
     if user is not None:
-        if request.method == "GET":
+        if request.method == 'GET':
             return jsonify(user.to_dict())
-        if request.method == "DELETE":
+        if request.method == 'DELETE':
             storage.delete(user)
             storage.save()
             return jsonify({})
         if request.method == 'PUT':
             if not request.json:
-                return make_response(jsonify("Not a JSON"), 400)
+                return make_response(jsonify('Not a JSON'), 400)
             elif 'password' not in request.json:
-                return make_response(jsonify("Missing password"), 400)
+                return make_response(jsonify('Missing password'), 400)
             attr = request.json
             user.password = attr['password']
             storage.save()
