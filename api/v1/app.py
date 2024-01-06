@@ -23,6 +23,10 @@ def not_found(error):
 if __name__ == "__main__":
     """The main function where we call all function"""
     from os import getenv
-    host = getenv('HBNB_API_HOST')
-    port = getenv('HBNB_API_PORT')
+    host = '0.0.0.0'
+    if getenv('HBNB_API_HOST'):
+        host = getenv('HBNB_API_HOST')
+    port = 5000
+    if getenv('HBNB_API_PORT'):
+        port = getenv('HBNB_API_PORT')
     app.run(host=host, port=port, threaded=True)
