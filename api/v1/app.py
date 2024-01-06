@@ -4,15 +4,15 @@ from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
 """End of the import module"""
-
-
 app = Flask(__name__)
 app.register_blueprint(app_views)
+
 
 @app.teardown_appcontext
 def teardown(exce):
     """Close of the session after each operation"""
     storage.close()
+
 
 @app.errorhandler(404)
 def not_found(error):

@@ -17,6 +17,7 @@ def status():
     json_status = {"status": "OK"}
     return jsonify(json_status)
 
+
 @app_views.route('/stats')
 def stats():
     """stats route doc"""
@@ -29,4 +30,3 @@ def stats():
             "users": storage.count(User)
             }
     return jsonify(stats_dict)
-

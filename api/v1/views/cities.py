@@ -7,11 +7,11 @@ from models.city import City
 from models.state import State
 
 
-@app_views.route('/states/<string:id>/cities', methods=['GET', 'POST'])
-def cities_by_state(id):
+@app_views.route('/states/<city_id>/cities', methods=['GET', 'POST'])
+def cities_by_state(city_id):
     """This route return the all cities by state"""
-    state = storage.get(State, id)
-    if state != None:
+    state = storage.get(State, city_id)
+    if state is not None:
         if request.method == 'GET':
             all_cities = state.cities
             new_dict = []
@@ -20,36 +20,37 @@ def cities_by_state(id):
             return jsonify(new_dict)
         if request.method == 'POST':
             if not request.json:
-                return make_response(jsonify("Not a JSON"), 400)
-            elif not 'name' in request.json:
-                return make_response(jsonify("Missing name"), 400)
+                return make_response(jsonify('Not a JSON'), 400)
+            elif 'name' not in request.json:
+                return make_response(jsonify('Missing name'), 400)
             attr = request.json
-            state = storage.get(State, id)
-            if state != None:
-                attr['state_id'] = id 
+            state = storage.get(State, city_id)
+            if state is not None:
+                attr['state_id'] = city_id
                 city = City(**attr)
                 city.save()
                 return make_response(jsonify(city.to_dict()), 201)
     return make_response(jsonify({"error": "Not Found"}), 404)
 
-@app_views.route('/cities/<string:id>', methods=['GET', 'DELETE', 'PUT'])
-def city_id(id):
-    """return citie with the match id"""
-    city = storage.get(City, id)
-    if city != None:
-        if request.method == "GET":
-                return jsonify(city.to_dict())
-        if request.method == "DELETE":
-                storage.delete(city)
-                storage.save()
-                return jsonify({})
+
+@app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'])
+def city_id(city_id):
+    """return citie with the match city_id"""
+    city = storage.get(City, city_id)
+    if city is not None:
+        if request.method == 'GET':
+            return jsonify(city.to_dict())
+        if request.method == 'DELETE':
+            storage.delete(city)
+            storage.save()
+            return jsonify({})
         if request.method == 'PUT':
-                if not request.json:
-                    return make_response(jsonify("Not a JSON"), 400)
-                elif not 'name' in request.json:
-                    return make_response(jsonify("Missing name"), 400)
-                attr = request.json
-                city.name = attr['name']
-                storage.save()
-                return make_response(jsonify(city.to_dict()), 200)
+            if not request.json:
+                return make_response(jsonify('Not a JSON'), 400)
+            elif 'name' not in request.json:
+                return make_response(jsonify('Missing name'), 400)
+            attr = request.json
+            city.name = attr['name']
+            storage.save()
+            return make_response(jsonify(city.to_dict()), 200)
     return make_response(jsonify({"error": "Not Found"}), 404)
