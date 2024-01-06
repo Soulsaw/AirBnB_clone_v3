@@ -79,17 +79,19 @@ class DBStorage:
         """Method to retrive on object"""
         if type(cls) is str:
             cls = classes.get(cls)
-        if cls is None:
+        obj = self.__session.query(cls).filter_by(id=id).first()
+        if obj is None:
             return None
-        all = self.all(cls).items()
-        key = f"{cls.__name__}.{id}"
-        for k, v in all:
-            if k == key:
-                return v
+        return obj
 
     def count(self, cls=None):
         """Method to count the number of object in storae"""
         if type(cls) is str:
             cls = classes.get(cls)
-        obj = self.all(cls)
-        return len(obj)
+        count = 0
+        if cls is None:
+            for obj in classes.values():
+                count += self.__session.query(obj).count()
+        else:
+            count += self.__session.query(cls).count()
+        return (count)
