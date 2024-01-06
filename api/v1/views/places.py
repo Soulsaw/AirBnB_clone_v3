@@ -8,7 +8,8 @@ from models.place import Place
 from models.user import User
 
 
-@app_views.route('/cities/<city_id>/places', methods=['GET', 'POST'])
+@app_views.route('/cities/<city_id>/places', strict_slashes=False,
+                 methods=['GET', 'POST'])
 def places_by_citie(city_id):
     """This route return the all places by citie"""
     citie = storage.get(City, city_id)
@@ -36,7 +37,8 @@ def places_by_citie(city_id):
     return make_response(jsonify({"error": "Not Found"}), 404)
 
 
-@app_views.route('/places/<place_id>', methods=['GET', 'DELETE', 'PUT'])
+@app_views.route('/places/<place_id>', strict_slashes=False,
+                 methods=['GET', 'DELETE', 'PUT'])
 def place_id(place_id):
     """return citie with the matching place_id"""
     place = storage.get(Place, place_id)

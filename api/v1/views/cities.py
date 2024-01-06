@@ -7,7 +7,8 @@ from models.city import City
 from models.state import State
 
 
-@app_views.route('/states/<city_id>/cities', methods=['GET', 'POST'])
+@app_views.route('/states/<city_id>/cities', strict_slashes=False,
+                 methods=['GET', 'POST'])
 def cities_by_state(city_id):
     """This route return the all cities by state"""
     state = storage.get(State, city_id)
@@ -33,7 +34,8 @@ def cities_by_state(city_id):
     return make_response(jsonify({"error": "Not Found"}), 404)
 
 
-@app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'])
+@app_views.route('/cities/<city_id>', strict_slashes=False,
+                 methods=['GET', 'DELETE', 'PUT'])
 def city_id(city_id):
     """return citie with the match city_id"""
     city = storage.get(City, city_id)

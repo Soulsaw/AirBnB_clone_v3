@@ -6,7 +6,7 @@ from api.v1.views import app_views
 from models.amenity import Amenity
 
 
-@app_views.route('/amenities', methods=['GET', 'POST'])
+@app_views.route('/amenities', strict_slashes=False, methods=['GET', 'POST'])
 def amenities():
     """Return a dictionary representation of all amenities"""
     if request.method == 'GET':
@@ -27,7 +27,8 @@ def amenities():
         return make_response(jsonify(amenity.to_dict()), 201)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['GET', 'DELETE', 'PUT'])
+@app_views.route('/amenities/<amenity_id>', strict_slashes=False,
+                 methods=['GET', 'DELETE', 'PUT'])
 def amenity_id(amenity_id):
     """return amenities with the match amenity_id"""
     amenity = storage.get(Amenity, amenity_id)

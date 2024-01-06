@@ -5,14 +5,14 @@ from models import storage
 from api.v1.views import app_views
 
 
-@app_views.route('/status')
+@app_views.route('/status', strict_slashes=False)
 def status():
     """Doc route status"""
     json_status = {"status": "OK"}
     return jsonify(json_status)
 
 
-@app_views.route('/stats')
+@app_views.route('/stats', strict_slashes=False)
 def stats():
     """stats route doc"""
     stats_dict = {

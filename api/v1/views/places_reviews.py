@@ -8,7 +8,8 @@ from models.user import User
 from models.review import Review
 
 
-@app_views.route('/places/<place_id>/reviews', methods=['GET', 'POST'])
+@app_views.route('/places/<place_id>/reviews', strict_slashes=False,
+                 methods=['GET', 'POST'])
 def reviews_by_place(place_id):
     """This route return the all reviews by place"""
     place = storage.get(Place, place_id)
@@ -36,7 +37,8 @@ def reviews_by_place(place_id):
     return make_response(jsonify({"error": "Not Found"}), 404)
 
 
-@app_views.route('/reviews/<review_id>', methods=['GET', 'DELETE', 'PUT'])
+@app_views.route('/reviews/<review_id>', strict_slashes=False,
+                 methods=['GET', 'DELETE', 'PUT'])
 def review(review_id):
     """return review with the matching review_id"""
     review = storage.get(Review, review_id)

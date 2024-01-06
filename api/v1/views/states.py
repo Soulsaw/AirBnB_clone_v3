@@ -6,7 +6,7 @@ from api.v1.views import app_views
 from models.state import State
 
 
-@app_views.route('/states', methods=['GET', 'POST'])
+@app_views.route('/states', strict_slashes=False, methods=['GET', 'POST'])
 def states():
     """Return a dictionary representation of all states"""
     if request.method == 'GET':
@@ -26,7 +26,8 @@ def states():
         return make_response(jsonify(state.to_dict()), 201)
 
 
-@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'])
+@app_views.route('/states/<state_id>', strict_slashes=False,
+                 methods=['GET', 'DELETE', 'PUT'])
 def state_id(state_id):
     """return states with the match state_id"""
     state = storage.get(State, state_id)

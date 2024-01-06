@@ -6,7 +6,7 @@ from api.v1.views import app_views
 from models.user import User
 
 
-@app_views.route('/users', methods=['GET', 'POST'])
+@app_views.route('/users', strict_slashes=False, methods=['GET', 'POST'])
 def users():
     """Return a dictionary representation of all users"""
     if request.method == 'GET':
@@ -28,7 +28,8 @@ def users():
         return make_response(jsonify(user.to_dict()), 201)
 
 
-@app_views.route('/users/<user_id>', methods=['GET', 'DELETE', 'PUT'])
+@app_views.route('/users/<user_id>', strict_slashes=False,
+                 methods=['GET', 'DELETE', 'PUT'])
 def user_id(user_id):
     """return an user with the matching user_id"""
     user = storage.get(User, user_id)
