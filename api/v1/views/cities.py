@@ -31,7 +31,7 @@ def cities_by_state(city_id):
                 city = City(**attr)
                 city.save()
                 return make_response(jsonify(city.to_dict()), 201)
-    return make_response(jsonify({"error": "Not Found"}), 404)
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 @app_views.route('/cities/<city_id>', strict_slashes=False,
