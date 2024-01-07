@@ -32,5 +32,5 @@ def generate_md5_hash(mapper, connection, target):
     """ implement the md5 hash"""
     target.password = md5(target.password.encode()).hexdigest()
 """ Listen the event on the table """
-event.listen(User, 'before_insert', generate_md5_hash)
+#event.listen(User, 'before_insert', generate_md5_hash)
 event.listen(User, 'before_update', generate_md5_hash)
