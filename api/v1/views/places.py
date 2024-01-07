@@ -34,7 +34,7 @@ def places_by_citie(city_id):
                 place = Place(**attr)
                 place.save()
                 return make_response(jsonify(place.to_dict()), 201)
-    return make_response(jsonify({"error": "Not Found"}), 404)
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 @app_views.route('/places/<place_id>', strict_slashes=False,
