@@ -56,3 +56,38 @@ def place_id(place_id):
             storage.save()
             return make_response(jsonify(place.to_dict()), 200)
     return make_response(jsonify({"error": "Not found"}), 404)
+
+
+@app_views.route('/places_search', strict_slashes=False,
+                 methods=['POST'])
+def places_search():
+    """This route return the all places by citie"""
+    if request.method == 'POST':
+        data = request.json
+        if not data:
+            return make_response(jsonify("Not a JSON"), 400)
+        states = data.get('states', [])
+        cities = data.get('cities', [])
+        amenities = data.get('amenities', [])
+        if not states and not cities and not amenities:
+            places = storage.all(Place).values()
+            return jsonify([place.to_dict() for place in places])
+        place_ids = set()
+        for state_id in states:
+            state = storage.get("State", state_id)
+            if state:
+                place_ids.update(place.id for city in state.cities
+                                 for place in city.places)
+        for city_id in cities:
+            city = storage.get("City", city_id)
+            if city:
+                place_ids.update(place.id for place in city.places)
+        places = [storage.get("Place", placeId).to_dict() for placeId
+                  in place_ids if storage.get("Place", placeId)]
+        if amenities:
+            amenities_set = set(amenities)
+            places = [place.to_dict() for place in places if
+                      amenities_set.issubset(place.amenities)]
+        print(len(places))
+        return jsonify(places)
+    return make_response(jsonify({"error": "Not found"}), 404)
