@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Doc module"""
+"""Doc module users for all"""
 from flask import jsonify, make_response, request
 from models import storage
 from api.v1.views import app_views
