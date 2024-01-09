@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Doc for the module"""
+"""
+Doc for the module app
+"""
 from flask import Flask, make_response, jsonify
 from flask_cors import CORS
 from models import storage
